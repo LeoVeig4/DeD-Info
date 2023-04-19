@@ -1,6 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
-  publicPath: "/Gremio/",
+  publicPath: "/DeD/",
   transpileDependencies: true,
   lintOnSave: false,
 });

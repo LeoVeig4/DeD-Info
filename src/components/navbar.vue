@@ -3,7 +3,11 @@
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-0"
     >
-      <a href="https://flowbite.com/" class="flex items-center">
+      <a
+        href="https://dnd.wizards.com/pt-BR"
+        target="_blanck"
+        class="flex items-center"
+      >
         <img
           src="../../public/DeD_logo.png"
           class="h-8 mr-3"
@@ -17,9 +21,10 @@
       <button
         data-collapse-toggle="navbar-default"
         type="button"
-        class="inline-flex items-center p-2 ml-3 text-sm text-white rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        class="inline-flex items-center p-2 ml-3 text-sm force_color rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         aria-controls="navbar-default"
         aria-expanded="false"
+        @click="DisplayDropdown()"
       >
         <span class="sr-only">Open main menu</span>
         <svg
@@ -38,50 +43,15 @@
       </button>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul
+          ref="list_ul"
           class="font-medium flex flex-col p-6 md:p-5 mt-4 border border-gray-100 rounded-lg bg-red-950 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-red-950"
         >
-          <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-white md:p-0"
-              aria-current="page"
-              >Home</a
+          <li v-for="navpage in navpages" :key="navpage.name">
+            <router-link
+              :to="navpage.route"
+              class="cursor-pointer block py-2 pl-3 pr-4 text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
+              >{{ navpage.name }}</router-link
             >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
-              >Classes</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
-              >Spells</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
-              >Monsters</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
-              >Magic Items
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
-              >My Hero
-            </a>
           </li>
         </ul>
       </div>
@@ -96,9 +66,56 @@ export default {
   name: "navbar-home",
   data() {
     return {
-      pageActive: "",
+      navpages: [
+        {
+          name: "Home",
+          route: "/home",
+        },
+        {
+          name: "Classes",
+          route: "/classes",
+        },
+        {
+          name: "Spells",
+          route: "/spells",
+        },
+        {
+          name: "Monsters",
+          route: "/monsters",
+        },
+        {
+          name: "Magic Items",
+          route: "/magicitems",
+        },
+        {
+          name: "My Hero",
+          route: "/myhero",
+        },
+      ],
+      pageActive: this.actualTitle,
+      dropdown: "none",
     };
   },
-  methods: {},
+  methods: {
+    DisplayDropdown() {},
+    goto(link) {
+      this.$router.push(link);
+    },
+  },
 };
 </script>
+
+<style>
+body {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("../../public/fundo_pedra.webp");
+  position: relative;
+}
+nav a.router-link-exact-active {
+  color: white;
+}
+</style>

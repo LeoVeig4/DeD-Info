@@ -1,17 +1,40 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/gremio.vue";
+import HomeView from "../views/home.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
+    redirect: "/home",
+  },
+  {
+    path: "/home",
+    name: "Home",
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-
-    component: () => import("../views/AboutView.vue"),
+    path: "/classes",
+    name: "Classes",
+    component: () => import("../views/classes.vue"),
+  },
+  {
+    path: "/spells",
+    name: "Spells",
+    component: () => import("../views/spells.vue"),
+  },
+  {
+    path: "/monsters",
+    name: "Monsters",
+    component: () => import("../views/monsters.vue"),
+  },
+  {
+    path: "/magicitems",
+    name: "Magic Items",
+    component: () => import("../views/magicItems.vue"),
+  },
+  {
+    path: "/myhero",
+    name: "My Hero",
+    component: () => import("../views/myHero.vue"),
   },
 ];
 

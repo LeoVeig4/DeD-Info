@@ -6,75 +6,24 @@
     @DisplayNone="showNone()"
     @DisplayInfo="(data) => showInfo(data)"
   />
-  <div
-    v-if="found_search"
-    class="bg-white border-4 border-red-700 rounded-xl w-4/12 mt-5 mx-auto"
-  >
-    <p>The search have no response</p>
+  <spells :spells="search_data" :isSearch="true" :haveFound="found_search" />
+  <div class="w-8/12 mt-10 mx-auto">
+    <h1 class="text-left font-md text-slate-200">-- Saved --</h1>
   </div>
-  <div
-    v-for="(item, index) in search_data"
-    :key="item.index"
-    :index="index"
-    class="relative w-8/12 mx-auto mt-12 rounded-lg shadow-sm shadow-slate-500 border-4 border-double border-red-100 text-left back-image"
-  >
-    <button
-      @click="SaveSpell(index)"
-      class="absolute text-yellow-900 bg-stone-100 rounded-lg font-bold hover:bg-yellow-900 hover:text-stone-100 p-1 mt-2 mr-4 top-0 right-0"
-    >
-      Save
-    </button>
-    <p class="mt-1 ml-1 text-white text-lg font-bold">
-      {{ item.name }}
-    </p>
-    <p class="mt-3 ml-1 text-white">
-      <span class="font-bold">Description:</span> {{ item.desc[0] }}
-    </p>
-    <p class="mt-1 ml-1 text-white">
-      <span class="font-bold">Range:</span> {{ item.range[0] }}
-    </p>
-    <p class="mt-1 ml-1 text-white">
-      <span class="font-bold">Components:</span>
-      {{ item.components.toString() }}
-      <span class="font-bold ml-2">Ritual:</span>
-      {{ item.ritual }}
-      <span class="font-bold ml-2">Concentration:</span>
-      {{ item.concentration }}
-      <span class="font-bold ml-2">Casting Time:</span>
-      {{ item.casting_time }}
-      <span class="font-bold ml-2">Level:</span>
-      {{ item.level }}
-      <span class="font-bold ml-2">Attack type:</span>
-      {{ item.attack_type }}
-    </p>
-    <p class="mt-1 ml-1 text-white">
-      <span class="font-bold">Material:</span>
-      {{ item.material }}
-    </p>
-    <p class="mt-1 ml-1 text-white">
-      <span class="font-bold">Components:</span>
-      {{ item.components.toString() }}
-    </p>
-    <p class="mt-1 ml-1 text-white">
-      <span class="font-bold">Damage by Slot Level:</span>
-      {{ formatDamageBySlot(item.damage.damage_at_slot_level) }}
-    </p>
-    <p class="mt-1 ml-1 text-white">
-      <span class="font-bold">Scholl:</span>
-      {{ item.school.name }}
-    </p>
-  </div>
+  <spells :spells="saved_data" :isSearch="false" :haveFound="found_search" />
 </template>
 
 <script>
 // @ is an alias to /src
 import navbar from "@/components/navbar.vue";
 import search from "@/components/search.vue";
+import spells from "@/components/spells.vue";
 
 export default {
   components: {
     navbar,
     search,
+    spells,
   },
   name: "home-view",
   data() {
@@ -82,6 +31,7 @@ export default {
       page_name: "Home",
       base_url: "spells",
       found_search: false,
+      saved_data: [],
       search_data: [
         {
           index: "acid-arrow",
@@ -135,7 +85,9 @@ export default {
       ],
     };
   },
-  mounted() {},
+  mounted() {
+    this.saved_data = this.$store.getters.spells;
+  },
   methods: {
     SaveSpell(index) {
       const spell = this.search_data[index];
@@ -151,7 +103,6 @@ export default {
     },
     showInfo(data) {
       this.search_data.push(data);
-      console.log(this.search_data);
       this.found_search = false;
     },
   },

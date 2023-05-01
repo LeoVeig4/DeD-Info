@@ -28,15 +28,51 @@ const store = createStore({
       state.spells.splice(spell, 1);
       localStorage.setItem("spells", JSON.stringify(state.spells));
     },
+    storeClasses(state, data) {
+      if (
+        state.classes.find((element) => element.name === data.name) !==
+        undefined
+      )
+        return;
+      state.classes.push(data);
+      localStorage.setItem("classes", JSON.stringify(state.classes));
+    },
+    removeClasses(state, data) {
+      const Class = state.classes.findIndex(
+        (element) => element.name === data.name
+      );
+      state.classes.splice(Class, 1);
+      localStorage.setItem("classes", JSON.stringify(state.classes));
+    },
+    storeMonster(state, data) {
+      if (
+        state.monsters.find((element) => element.name === data.name) !==
+        undefined
+      )
+        return;
+      state.monsters.push(data);
+      localStorage.setItem("monsters", JSON.stringify(state.monsters));
+    },
+    removeMonster(state, data) {
+      const monster = state.monsters.findIndex(
+        (element) => element.name === data.name
+      );
+      state.monsters.splice(monster, 1);
+      localStorage.setItem("monsters", JSON.stringify(state.monsters));
+    },
   },
   getters: {
     spells(state) {
-      return state.spells
-    }
+      return state.spells;
+    },
+    classes(state) {
+      return state.classes;
+    },
+    monsters(state) {
+      return state.monsters;
+    },
   },
-  actions: {
-    
-  }
+  actions: {},
 });
 
 export default store;

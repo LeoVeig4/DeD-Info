@@ -1,111 +1,59 @@
 <template>
   <navbar />
-  <search
-    :page_name="page_name"
-    :url_base="base_url"
-    @DisplayNone="showNone()"
-    @DisplayInfo="(data) => showInfo(data)"
-  />
-  <spells :spells="search_data" :isSearch="true" :haveFound="found_search" />
-  <div class="w-8/12 mt-10 mx-auto">
-    <h1 class="text-left font-md text-slate-200">-- Saved --</h1>
+  <div
+    class="container bg-red-700 h-24 w-8/12 mx-auto mt-10 rounded-lg minimo md:pt-4 pt-7"
+  >
+    <h1 class="md:text-6xl text-4xl font-bold text-amber-100 text-center">
+      All Saved Stuff
+    </h1>
   </div>
-  <spells :spells="saved_data" :isSearch="false" :haveFound="found_search" />
+  <div class="w-8/12 mt-10 mx-auto">
+    <h1 class="text-left font-md text-slate-200">-- Saved Classes--</h1>
+  </div>
+  <classes :classes="saved_classes" :isSearch="false" :haveFound="false" />
+  <div class="w-8/12 mt-10 mx-auto">
+    <h1 class="text-left font-md text-slate-200">-- Saved Spells--</h1>
+  </div>
+  <spells :spells="saved_spells" :isSearch="false" :haveFound="false" />
+  <div class="w-8/12 mt-10 mx-auto">
+    <h1 class="text-left font-md text-slate-200">-- Saved Monsters--</h1>
+  </div>
+  <monsters
+    :monsters="saved_monsters"
+    :isSearch="false"
+    :haveFound="found_search"
+  />
 </template>
 
 <script>
 // @ is an alias to /src
 import navbar from "@/components/navbar.vue";
-import search from "@/components/search.vue";
 import spells from "@/components/spells.vue";
+import monsters from "@/components/monsters.vue";
+import classes from "@/components/classes.vue";
 
 export default {
   components: {
     navbar,
-    search,
     spells,
+    monsters,
+    classes,
   },
   name: "home-view",
   data() {
     return {
       page_name: "Home",
-      base_url: "spells",
-      found_search: false,
-      saved_data: [],
-      search_data: [
-        {
-          index: "acid-arrow",
-          name: "Acid Arrow",
-          desc: [
-            "A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 acid damage immediately and 2d4 acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage and no damage at the end of its next turn.",
-          ],
-          higher_level: [
-            "When you cast this spell using a spell slot of 3rd level or higher, the damage (both initial and later) increases by 1d4 for each slot level above 2nd.",
-          ],
-          range: "90 feet",
-          components: ["V", "S", "M"],
-          material: "Powdered rhubarb leaf and an adder's stomach.",
-          ritual: false,
-          duration: "Instantaneous",
-          concentration: false,
-          casting_time: "1 action",
-          level: 2,
-          attack_type: "ranged",
-          damage: {
-            damage_type: {
-              index: "acid",
-              name: "Acid",
-              url: "/api/damage-types/acid",
-            },
-            damage_at_slot_level: {
-              2: "4d4",
-              3: "5d4",
-              4: "6d4",
-              5: "7d4",
-              6: "8d4",
-              7: "9d4",
-              8: "10d4",
-              9: "11d4",
-            },
-          },
-          school: {
-            index: "evocation",
-            name: "Evocation",
-            url: "/api/magic-schools/evocation",
-          },
-          classes: [
-            { index: "wizard", name: "Wizard", url: "/api/classes/wizard" },
-          ],
-          subclasses: [
-            { index: "lore", name: "Lore", url: "/api/subclasses/lore" },
-            { index: "land", name: "Land", url: "/api/subclasses/land" },
-          ],
-          url: "/api/spells/acid-arrow",
-        },
-      ],
+      saved_spells: [],
+      saved_classes: [],
+      saved_monsters: [],
     };
   },
   mounted() {
-    this.saved_data = this.$store.getters.spells;
+    this.saved_spells = this.$store.getters.spells;
+    this.saved_classes = this.$store.getters.classes;
+    this.saved_monsters = this.$store.getters.monsters;
   },
-  methods: {
-    SaveSpell(index) {
-      const spell = this.search_data[index];
-      this.$store.commit("storeSpell", spell);
-    },
-    formatDamageBySlot(objString) {
-      let result = "";
-      for (let key in objString) result += `(${key}: ${objString[key]}), `;
-      return result.slice(0, -2);
-    },
-    showNone() {
-      this.found_search = true;
-    },
-    showInfo(data) {
-      this.search_data.push(data);
-      this.found_search = false;
-    },
-  },
+  methods: {},
 };
 </script>
 

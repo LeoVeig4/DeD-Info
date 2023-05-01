@@ -27,11 +27,6 @@ const routes = [
     component: () => import("../views/monsters.vue"),
   },
   {
-    path: "/magicitems",
-    name: "Magic Items",
-    component: () => import("../views/magicItems.vue"),
-  },
-  {
     path: "/myhero",
     name: "My Hero",
     component: () => import("../views/myHero.vue"),

@@ -1,23 +1,60 @@
 <template>
-  <navbar :actualTitle="page_name" />
+  <navbar />
+  <search
+    :page_name="page_name"
+    :url_base="base_url"
+    @DisplayNone="showNone()"
+    @DisplayInfo="(data) => showInfo(data)"
+  />
+  <monsters
+    :monsters="search_data"
+    :isSearch="true"
+    :haveFound="found_search"
+  />
+  <div class="w-8/12 mt-10 mx-auto">
+    <h1 class="text-left font-md text-slate-200">-- Saved --</h1>
+  </div>
+  <monsters
+    :monsters="saved_data"
+    :isSearch="false"
+    :haveFound="found_search"
+  />
 </template>
 
 <script>
 // @ is an alias to /src
 import navbar from "@/components/navbar.vue";
+import search from "@/components/search.vue";
+import monsters from "@/components/monsters.vue";
 
 export default {
   components: {
     navbar,
+    search,
+    monsters,
   },
-  name: "monsters-classes",
+  name: "monsters-view",
   data() {
     return {
-      is_muted: false,
       page_name: "Monsters",
+      base_url: "monsters",
+      found_search: false,
+      saved_data: [],
+      search_data: [],
     };
   },
-  methods: {},
+  mounted() {
+    this.saved_data = this.$store.getters.monsters;
+  },
+  methods: {
+    showNone() {
+      this.found_search = true;
+    },
+    showInfo(data) {
+      this.search_data.push(data);
+      this.found_search = false;
+    },
+  },
 };
 </script>
 
@@ -26,7 +63,15 @@ export default {
   transform: translatey(0px);
   animation: float 2s ease-in-out infinite;
 }
-
+.back-image {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("../../public/fundo_madeira.jpg");
+  background-size: 150px;
+}
 @keyframes float {
   0% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);

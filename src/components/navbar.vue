@@ -84,10 +84,6 @@ export default {
           route: "/monsters",
         },
         {
-          name: "Magic Items",
-          route: "/magicitems",
-        },
-        {
           name: "My Hero",
           route: "/myhero",
         },

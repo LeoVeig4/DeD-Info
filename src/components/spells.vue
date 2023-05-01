@@ -9,7 +9,7 @@
     v-for="(item, index) in spells"
     :key="item.index"
     :index="index"
-    class="relative w-8/12 mx-auto mt-12 rounded-lg shadow-sm shadow-slate-500 border-4 border-black text-left back-image"
+    class="minimo relative w-8/12 mx-auto mt-12 rounded-lg shadow-sm shadow-slate-500 border-4 border-black text-left back-image"
   >
     <button
       @click="SaveSpell(index)"
@@ -60,9 +60,7 @@
     </p>
     <p class="mt-1 ml-4 text-white">
       <span class="font-bold">Damage by Slot Level: </span>
-      <span class="text-stone-200">{{
-        formatDamageBySlot(item.damage.damage_at_slot_level)
-      }}</span>
+      <span class="text-stone-200">{{ formatDamageBySlot(index) }}</span>
     </p>
     <p class="mt-1 ml-4 mb-4 text-white">
       <span class="font-bold">Scholl: </span>
@@ -96,9 +94,13 @@ export default {
       const spell = this.spells[index];
       this.$store.commit("storeSpell", spell);
     },
-    formatDamageBySlot(objString) {
+    formatDamageBySlot(index) {
       let result = "";
-      for (let key in objString) result += `(${key}: ${objString[key]}), `;
+      if (this.spells[index].damage) {
+        for (let key in this.spells[index].damage.damage_at_slot_level)
+          result += `(${key}: ${this.spells[index].damage.damage_at_slot_level[key]}), `;
+      }
+
       return result.slice(0, -2);
     },
     showNone() {
@@ -114,6 +116,9 @@ export default {
 </script>
 
 <style>
+.minimo {
+  min-width: 350px;
+}
 .back-image {
   background-image: linear-gradient(
       to bottom,

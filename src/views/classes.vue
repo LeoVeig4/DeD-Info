@@ -5,12 +5,13 @@
     :url_base="base_url"
     @DisplayNone="showNone()"
     @DisplayInfo="(data) => showInfo(data)"
+    class="minimo"
   />
-  <classes :spells="search_data" :isSearch="true" :haveFound="found_search" />
+  <classes :classes="search_data" :isSearch="true" :haveFound="found_search" />
   <div class="w-8/12 mt-10 mx-auto">
     <h1 class="text-left font-md text-slate-200">-- Saved --</h1>
   </div>
-  <classes :spells="saved_data" :isSearch="false" :haveFound="found_search" />
+  <classes :classes="saved_data" :isSearch="false" :haveFound="found_search" />
 </template>
 
 <script>
@@ -25,7 +26,7 @@ export default {
     search,
     classes,
   },
-  name: "home-view",
+  name: "classes-view",
   data() {
     return {
       page_name: "Classes",
@@ -36,7 +37,7 @@ export default {
     };
   },
   mounted() {
-    this.saved_data = this.$store.getters.spells;
+    this.saved_data = this.$store.getters.classes;
   },
   methods: {
     SaveSpell(index) {

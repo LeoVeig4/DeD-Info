@@ -1,5 +1,6 @@
 <template>
   <navbar :actualTitle="page_name" />
+  <img src="../../public/comingSoon.jpg" class="rounded-xl m-auto mt-10" />
 </template>
 
 <script>

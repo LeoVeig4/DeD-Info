@@ -5,7 +5,6 @@
     :url_base="base_url"
     @DisplayNone="showNone()"
     @DisplayInfo="(data) => showInfo(data)"
-    class="minimo"
   />
   <classes :classes="search_data" :isSearch="true" :haveFound="found_search" />
   <div class="w-8/12 mt-10 mx-auto">

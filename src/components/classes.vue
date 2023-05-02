@@ -42,12 +42,7 @@
     </p>
     <p class="mt-3 ml-4 text-white">
       <span class="font-bold"
-        >Starting Equipment
-        <i
-          class="fas fa-regular fa-circle-info"
-          v-tooltip="'Equipment name (quantity)'"
-        ></i
-        >:
+        >Starting Equipment <i class="fas fa-regular fa-circle-info"></i>:
       </span>
       <span class="text-stone-200">{{ FormatEquipment(index) }}</span>
     </p>

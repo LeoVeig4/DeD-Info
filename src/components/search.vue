@@ -45,6 +45,7 @@ export default {
     url_base: String,
     page_name: String,
   },
+  emits: ["DisplayInfo", "DisplayNone"],
 
   data() {
     return {

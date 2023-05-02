@@ -18,11 +18,7 @@
   <div class="w-8/12 mt-10 mx-auto">
     <h1 class="text-left font-md text-slate-200">-- Saved Monsters--</h1>
   </div>
-  <monsters
-    :monsters="saved_monsters"
-    :isSearch="false"
-    :haveFound="found_search"
-  />
+  <monsters :monsters="saved_monsters" :isSearch="false" :haveFound="false" />
 </template>
 
 <script>

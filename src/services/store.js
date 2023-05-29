@@ -3,16 +3,50 @@ import { createStore } from "vuex";
 const spellObj = JSON.parse(localStorage.getItem("spells"));
 const classesObj = JSON.parse(localStorage.getItem("classes"));
 const monstersObj = JSON.parse(localStorage.getItem("monsters"));
-const magicItemsObj = JSON.parse(localStorage.getItem("magicItems"));
+//const magicItemsObj = JSON.parse(localStorage.getItem("magicItems"));
+const token = localStorage.getItem("userToken");
+const user = localStorage.getItem("@Role");
 
 const store = createStore({
   state: {
     spells: spellObj || [],
     classes: classesObj || [],
     monsters: monstersObj || [],
-    maginItems: magicItemsObj || [],
+    //maginItems: magicItemsObj || [],
+    token: token || null,
+    role: user || null,
   },
   mutations: {
+    storeSaved(state, data) {
+      const spells = Object.values(data.spells);
+      state.spells = spells;
+      localStorage.setItem("spells", JSON.stringify(state.spells));
+      if (!state.spells) localStorage.removeItem("spells");
+      const classes = Object.values(data.classes);
+      state.classes = classes;
+      localStorage.setItem("classes", JSON.stringify(state.classes));
+      if (!state.classes) localStorage.removeItem("classes");
+      const monsters = Object.values(data.monsters);
+      state.monsters = monsters;
+      localStorage.setItem("monsters", JSON.stringify(state.monsters));
+      if (!state.monsters) localStorage.removeItem("monsters");
+    },
+    storeRole(state, data) {
+      state.role = data;
+      localStorage.setItem("@Role", data);
+    },
+    removeRole(state) {
+      state.role = null;
+      localStorage.removeItem("@Role");
+    },
+    storeToken(state, data) {
+      state.token = data;
+      localStorage.setItem("userToken", data);
+    },
+    removeToken(state) {
+      state.token = null;
+      localStorage.removeItem("userToken");
+    },
     storeSpell(state, data) {
       if (
         state.spells.find((element) => element.name === data.name) !== undefined
@@ -27,8 +61,10 @@ const store = createStore({
       );
       state.spells.splice(spell, 1);
       localStorage.setItem("spells", JSON.stringify(state.spells));
+      if (state.spells === []) localStorage.removeItem("spells");
     },
-    storeClasses(state, data) {
+    storeClasses(state, data, text) {
+      console.log(text);
       if (
         state.classes.find((element) => element.name === data.name) !==
         undefined
@@ -43,6 +79,7 @@ const store = createStore({
       );
       state.classes.splice(Class, 1);
       localStorage.setItem("classes", JSON.stringify(state.classes));
+      if (state.classes === []) localStorage.removeItem("classes");
     },
     storeMonster(state, data) {
       if (
@@ -59,6 +96,7 @@ const store = createStore({
       );
       state.monsters.splice(monster, 1);
       localStorage.setItem("monsters", JSON.stringify(state.monsters));
+      if (state.monsters === []) localStorage.removeItem("monsters");
     },
   },
   getters: {
@@ -70,6 +108,12 @@ const store = createStore({
     },
     monsters(state) {
       return state.monsters;
+    },
+    token(state) {
+      return state.token;
+    },
+    role(state) {
+      return state.role;
     },
   },
   actions: {},

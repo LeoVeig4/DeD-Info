@@ -62,6 +62,7 @@
 
 <script>
 // @ is an alias to /src
+import apiprivate from "@/services/apiprivate.js";
 
 export default {
   props: {
@@ -91,13 +92,33 @@ export default {
       });
       return proficiencies.slice(0, -2);
     },
-    RemoveClass(index) {
-      const Class = this.classes[index];
-      this.$store.commit("removeClasses", Class);
+    async RemoveClass(index) {
+      try {
+        const Class = this.classes[index];
+        const token = localStorage.getItem("@Role");
+        if (token) {
+          await apiprivate.delete(`/cards/classes/${Class.index}`);
+        }
+        this.$store.commit("removeClasses", Class);
+      } catch (error) {
+        console.log(error);
+      }
     },
-    SaveClass(index) {
-      const Class = this.classes[index];
-      this.$store.commit("storeClasses", Class);
+    async SaveClass(index) {
+      try {
+        const Class = this.classes[index];
+        const token = localStorage.getItem("@Role");
+        if (token) {
+          const model = {
+            card: Class,
+            type: "classes",
+          };
+          await apiprivate.post("/cards", model);
+        }
+        this.$store.commit("storeClasses", Class);
+      } catch (error) {
+        console.log(error);
+      }
     },
     showNone() {
       this.found_search = true;

@@ -71,6 +71,7 @@
 
 <script>
 // @ is an alias to /src
+import apiprivate from "../services/apiprivate";
 
 export default {
   props: {
@@ -86,13 +87,33 @@ export default {
   },
   mounted() {},
   methods: {
-    RemoveSpell(index) {
-      const spell = this.spells[index];
-      this.$store.commit("removeSpell", spell);
+    async RemoveSpell(index) {
+      try {
+        const spell = this.spells[index];
+        const token = localStorage.getItem("@Role");
+        if (token) {
+          await apiprivate.delete(`/cards/spells/${spell.index}`);
+        }
+        this.$store.commit("removeSpell", spell);
+      } catch (error) {
+        console.log(error);
+      }
     },
-    SaveSpell(index) {
-      const spell = this.spells[index];
-      this.$store.commit("storeSpell", spell);
+    async SaveSpell(index) {
+      try {
+        const spell = this.spells[index];
+        const token = localStorage.getItem("@Role");
+        if (token) {
+          const model = {
+            card: spell,
+            type: "spells",
+          };
+          await apiprivate.post("/cards", model);
+        }
+        this.$store.commit("storeSpell", spell);
+      } catch (error) {
+        console.log(error);
+      }
     },
     formatDamageBySlot(index) {
       let result = "";

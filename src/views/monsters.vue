@@ -23,7 +23,7 @@
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbar.vue";
+import navbar from "@/components/navbarNoLogged.vue";
 import search from "@/components/search.vue";
 import monsters from "@/components/monsters.vue";
 

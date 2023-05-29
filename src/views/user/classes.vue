@@ -6,42 +6,46 @@
     @DisplayNone="showNone()"
     @DisplayInfo="(data) => showInfo(data)"
   />
-  <spells :spells="search_data" :isSearch="true" :haveFound="found_search" />
+  <classes :classes="search_data" :isSearch="true" :haveFound="found_search" />
   <div class="w-8/12 mt-10 mx-auto">
     <h1 class="text-left font-md text-slate-200">-- Saved --</h1>
   </div>
-  <spells :spells="saved_data" :isSearch="false" :haveFound="found_search" />
+  <classes :classes="saved_data" :isSearch="false" :haveFound="found_search" />
 </template>
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarNoLogged.vue";
+import navbar from "@/components/navbarLogged.vue";
 import search from "@/components/search.vue";
-import spells from "@/components/spells.vue";
+import classes from "@/components/classes.vue";
 
 export default {
   components: {
     navbar,
     search,
-    spells,
+    classes,
   },
-  name: "home-view",
+  name: "classes-view",
   data() {
     return {
-      page_name: "Spells",
-      base_url: "spells",
+      page_name: "Classes",
+      base_url: "classes",
       found_search: false,
       saved_data: [],
       search_data: [],
     };
   },
   mounted() {
-    this.saved_data = this.$store.getters.spells;
+    this.saved_data = this.$store.getters.classes;
   },
   methods: {
-    SaveSpell(index) {
-      const spell = this.search_data[index];
-      this.$store.commit("storeSpell", spell);
+    async SaveSpell(index) {
+      try {
+        const spell = this.search_data[index];
+        this.$store.commit("storeSpell", spell);
+      } catch (error) {
+        console.log(error);
+      }
     },
     formatDamageBySlot(objString) {
       let result = "";
@@ -70,7 +74,7 @@ export default {
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.5)
     ),
-    url("../../public/fundo_madeira.jpg");
+    url("../../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
 @keyframes float {

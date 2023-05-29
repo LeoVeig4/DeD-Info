@@ -15,7 +15,7 @@
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarNoLogged.vue";
+import navbar from "@/components/navbarLogged.vue";
 import search from "@/components/search.vue";
 import spells from "@/components/spells.vue";
 
@@ -70,7 +70,7 @@ export default {
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.5)
     ),
-    url("../../public/fundo_madeira.jpg");
+    url("../../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
 @keyframes float {

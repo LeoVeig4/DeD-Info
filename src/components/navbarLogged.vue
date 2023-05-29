@@ -10,7 +10,7 @@
       >
         <img
           src="../../public/DeD_logo.png"
-          class="h-8 mr-3"
+          class="h-8 mr-3 border-2 rounded-full"
           alt="D&D 5 Logo"
         />
         <span
@@ -53,6 +53,14 @@
               >{{ navpage.name }}</router-link
             >
           </li>
+          <li>
+            <button
+              @click="handleSignOut()"
+              class="cursor-pointer block py-2 pl-3 pr-4 font-bold text-slate-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-800 md:p-0"
+            >
+              Sign out
+            </button>
+          </li>
         </ul>
       </div>
     </div>
@@ -69,23 +77,23 @@ export default {
       navpages: [
         {
           name: "Home",
-          route: "/home",
+          route: "/logged/home",
         },
         {
           name: "Classes",
-          route: "/classes",
+          route: "/logged/classes",
         },
         {
           name: "Spells",
-          route: "/spells",
+          route: "/logged/spells",
         },
         {
           name: "Monsters",
-          route: "/monsters",
+          route: "/logged/monsters",
         },
         {
           name: "My Hero",
-          route: "/myhero",
+          route: "/logged/myhero",
         },
       ],
       pageActive: this.actualTitle,
@@ -93,6 +101,11 @@ export default {
     };
   },
   methods: {
+    handleSignOut() {
+      this.$store.commit("removeRole");
+      this.$store.commit("removeToken");
+      this.$router.push("/myhero");
+    },
     DisplayDropdown() {},
     goto(link) {
       this.$router.push(link);

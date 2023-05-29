@@ -155,6 +155,7 @@
 <script>
 // @ is an alias to /src
 import api from "@/services/api.js";
+import apiprivate from "@/services/apiprivate.js";
 
 export default {
   props: {
@@ -199,13 +200,33 @@ export default {
       return speed.slice(0, -2);
     },
 
-    RemoveMonters(index) {
-      const monster = this.monster[index];
-      this.$store.commit("removeMonster", monster);
+    async RemoveMonters(index) {
+      try {
+        const monster = this.monsters[index];
+        const token = localStorage.getItem("@Role");
+        if (token) {
+          await apiprivate.delete(`/cards/monsters/${monster.index}`);
+        }
+        this.$store.commit("removeMonster", monster);
+      } catch (error) {
+        console.log(error);
+      }
     },
-    SaveMonster(index) {
-      const monster = this.monsters[index];
-      this.$store.commit("storeMonster", monster);
+    async SaveMonster(index) {
+      try {
+        const monster = this.monsters[index];
+        const token = localStorage.getItem("@Role");
+        if (token) {
+          const model = {
+            card: monster,
+            type: "monsters",
+          };
+          await apiprivate.post("/cards", model);
+        }
+        this.$store.commit("storeMonster", monster);
+      } catch (error) {
+        console.log(error);
+      }
     },
     showNone() {
       this.found_search = true;

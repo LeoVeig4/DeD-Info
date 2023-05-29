@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrlPrivate = "http://127.0.0.1:3000";
+const apiUrlPrivate = "https://appded.herokuapp.com/";
 
 const apiprivate = axios.create({
   baseURL: apiUrlPrivate,

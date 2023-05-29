@@ -5,6 +5,7 @@ const routes = [
   {
     path: "/",
     name: "noLogged",
+    redirect: "/home",
     beforeEnter: (to, from, next) => {
       const role = localStorage.getItem("@Role");
       if (role) next("/logged");

@@ -104,6 +104,7 @@ export default {
     handleSignOut() {
       this.$store.commit("removeRole");
       this.$store.commit("removeToken");
+      this.$store.commit("removeCards");
       this.$router.push("/myhero");
     },
     DisplayDropdown() {},

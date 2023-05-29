@@ -17,6 +17,14 @@ const store = createStore({
     role: user || null,
   },
   mutations: {
+    removeCards(state) {
+      state.classs = []
+      state.spells = []
+      state.monsters = []
+      localStorage.removeItem("classes");
+      localStorage.removeItem("spells");
+      localStorage.removeItem("monsters");
+    },
     storeSaved(state, data) {
       const spells = Object.values(data.spells);
       state.spells = spells;

@@ -95,8 +95,18 @@ export default {
           await apiprivate.delete(`/cards/spells/${spell.index}`);
         }
         this.$store.commit("removeSpell", spell);
+        this.$toast.success("Spell removed", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     async SaveSpell(index) {
@@ -111,8 +121,18 @@ export default {
           await apiprivate.post("/cards", model);
         }
         this.$store.commit("storeSpell", spell);
+        this.$toast.success("Spell saved", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     formatDamageBySlot(index) {
@@ -140,6 +160,7 @@ export default {
 .minimo {
   min-width: 350px;
 }
+
 .back-image {
   background-image: linear-gradient(
       to bottom,

@@ -8,7 +8,7 @@
       class="h-28 mx-auto mt-3 mb-3 border-4 rounded-full"
       alt="D&D 5 Logo"
     />
-    <p class="text-3xl m-5 text-stone-200 font-bold">Você está logado!!</p>
+    <p class="text-3xl m-5 text-stone-200 font-bold">You are logged in!!</p>
   </div>
 </template>
 
@@ -52,6 +52,7 @@ export default {
 .bt-background {
   background-color: #b91c1c;
 }
+
 .bt-background:hover {
   background-color: #ebd6a7;
 }
@@ -59,9 +60,11 @@ export default {
 .text-color {
   color: #b91c1c;
 }
+
 .text-color:hover {
   color: #ebd6a7;
 }
+
 .container-login {
   max-width: 450px;
   min-width: 300px;
@@ -73,6 +76,7 @@ export default {
     url("../../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
+
 @keyframes float {
   0% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);

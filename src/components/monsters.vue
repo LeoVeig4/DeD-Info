@@ -208,8 +208,18 @@ export default {
           await apiprivate.delete(`/cards/monsters/${monster.index}`);
         }
         this.$store.commit("removeMonster", monster);
+        this.$toast.success("Monster removed", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     async SaveMonster(index) {
@@ -224,8 +234,18 @@ export default {
           await apiprivate.post("/cards", model);
         }
         this.$store.commit("storeMonster", monster);
+        this.$toast.success("Monster saved", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     showNone() {
@@ -246,9 +266,11 @@ export default {
   width: 50%;
   max-width: 400px;
 }
+
 .minimo {
   min-width: 350px;
 }
+
 .back-image {
   background-image: linear-gradient(
       to bottom,

@@ -100,8 +100,18 @@ export default {
           await apiprivate.delete(`/cards/classes/${Class.index}`);
         }
         this.$store.commit("removeClasses", Class);
+        this.$toast.success("Class removed", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     async SaveClass(index) {
@@ -116,8 +126,18 @@ export default {
           await apiprivate.post("/cards", model);
         }
         this.$store.commit("storeClasses", Class);
+        this.$toast.success("Class saved", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     showNone() {
@@ -136,6 +156,7 @@ export default {
 .minimo {
   min-width: 350px;
 }
+
 .back-image {
   background-image: linear-gradient(
       to bottom,

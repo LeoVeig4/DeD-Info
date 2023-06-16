@@ -22,9 +22,9 @@
   </div>
   <div
     v-if="error"
-    class="container bg-stone-300 h-10 border-8 border-red-700 w-4/12 mx-auto mt-3 rounded-lg minimo"
+    class="bg-white border-4 border-red-700 rounded-xl w-4/12 mt-5 mx-auto"
   >
-    <p class="text-center">Deve-se preencher algo antes de pesquisar</p>
+    <p class="text-center">You must right something before interacting</p>
   </div>
   <div
     v-if="guide_visible"
@@ -55,10 +55,17 @@ export default {
       guideSearch: [],
       formatSearchGuide: "",
       error: false,
+      toastId: "",
     };
   },
   methods: {
     async handleInfo() {
+      this.toastId = this.$toast.loading("Searching", {
+        toastId: "customId",
+        autoClose: false,
+        position: this.$toast.POSITION.BOTTOM_CENTER,
+      });
+
       try {
         const { data } = await api.get(`${this.url_base}`);
         this.guideSearch = data;
@@ -69,12 +76,34 @@ export default {
         this.formatSearchGuide = search.slice(0, -2);
         this.guide_visible = true;
         this.error = false;
+        console.log("oi");
+        this.$toast.update(this.toastId, {
+          render: "Search Completed!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          type: "success",
+          isLoading: false,
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.update(this.toastId, {
+          render: "Error!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          type: "error",
+          isLoading: false,
+        });
       }
     },
 
     async handleSearch() {
+      this.toastId = this.$toast.loading("Searching", {
+        toastId: "customId",
+        autoClose: false,
+        position: this.$toast.POSITION.BOTTOM_CENTER,
+      });
       try {
         const newString = this.searchString.toLowerCase().replaceAll(" ", "-");
         this.guide_visible = false;
@@ -83,10 +112,37 @@ export default {
           if (data) this.$emit("DisplayInfo", data);
           else this.$emit("DisplayNone");
           this.error = false;
+          this.$toast.update(this.toastId, {
+            render: "Search Completed!",
+            autoClose: 2000,
+            closeOnClick: true,
+            closeButton: true,
+            theme: "dark",
+            type: "success",
+            isLoading: false,
+          });
         } else {
+          this.$toast.update(this.toastId, {
+            render: "Write Something!",
+            autoClose: 2000,
+            closeOnClick: true,
+            closeButton: true,
+            type: "error",
+            theme: "dark",
+            isLoading: false,
+          });
           this.error = true;
         }
       } catch (error) {
+        this.$toast.update(this.toastId, {
+          render: "Error!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          theme: "dark",
+          type: "error",
+          isLoading: false,
+        });
         console.log(error);
         this.$emit("DisplayNone");
       }
@@ -99,6 +155,7 @@ export default {
 .minimo {
   min-width: 350px;
 }
+
 body {
   background-image: linear-gradient(
       to bottom,
@@ -108,6 +165,7 @@ body {
     url("../../public/fundo_pedra.webp");
   position: relative;
 }
+
 nav a.router-link-exact-active {
   color: white;
 }

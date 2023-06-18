@@ -6,6 +6,7 @@ const routes = [
     path: "/",
     name: "noLogged",
     redirect: "/home",
+    component: () => import("../components/navbarNoLogged.vue"),
     beforeEnter: (to, from, next) => {
       const role = localStorage.getItem("@Role");
       if (role) next("/logged");
@@ -43,6 +44,7 @@ const routes = [
     path: "/logged",
     redirect: "/logged/home",
     name: "My Hero Logged",
+    component: () => import("../components/navbarLogged.vue"),
     beforeEnter: (to, from, next) => {
       const role = localStorage.getItem("@Role");
       if (role !== "simple-user") next("/myhero");

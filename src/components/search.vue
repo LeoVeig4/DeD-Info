@@ -58,6 +58,7 @@ export default {
       toastId: "",
     };
   },
+  mounted() {},
   methods: {
     async handleInfo() {
       this.toastId = this.$toast.loading("Searching", {

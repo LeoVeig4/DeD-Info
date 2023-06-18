@@ -1,5 +1,4 @@
 <template>
-  <navbar :actualTitle="page_name" />
   <div
     class="bg-white border-4 border-red-700 rounded-xl w-6/12 mt-8 mx-auto container-login"
   >
@@ -14,12 +13,9 @@
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarLogged.vue";
 import apiprivate from "@/services/apiprivate.js";
 export default {
-  components: {
-    navbar,
-  },
+  components: {},
   name: "my-hero-view",
   data() {
     return {

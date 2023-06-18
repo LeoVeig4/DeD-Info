@@ -1,5 +1,4 @@
 <template>
-  <navbar />
   <div
     class="container bg-red-700 h-24 w-8/12 mx-auto mt-10 rounded-lg minimo md:pt-4 pt-7"
   >
@@ -23,14 +22,12 @@
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarLogged.vue";
 import spells from "@/components/spells.vue";
 import monsters from "@/components/monsters.vue";
 import classes from "@/components/classes.vue";
 
 export default {
   components: {
-    navbar,
     spells,
     monsters,
     classes,
@@ -58,6 +55,7 @@ export default {
   transform: translatey(0px);
   animation: float 2s ease-in-out infinite;
 }
+
 .back-image {
   background-image: linear-gradient(
       to bottom,
@@ -67,6 +65,7 @@ export default {
     url("../../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
+
 @keyframes float {
   0% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);

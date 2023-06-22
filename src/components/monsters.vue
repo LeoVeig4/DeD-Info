@@ -119,7 +119,6 @@
 
 <script>
 // @ is an alias to /src
-import api from "@/services/api.js";
 import apiprivate from "@/services/apiprivate.js";
 import ModalImage from "./ModalImage.vue";
 export default {
@@ -139,14 +138,17 @@ export default {
     };
   },
   mounted() {
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
   },
   beforeUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener("click", this.handleClickOutside);
   },
   methods: {
-    closeModal() { this.picture.show = false; },
+    closeModal() {
+      this.picture.show = false;
+    },
     async SeePicture(index) {
+      this.$gtag.event("picture", { 'event_category': 'engagement', 'event_label': 'method' });
       if (this.monsters[index].image) {
         const url = this.monsters[index].image.slice(4);
         this.picture.img = "https://www.dnd5eapi.co/api" + url;

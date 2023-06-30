@@ -18,9 +18,9 @@ const store = createStore({
   },
   mutations: {
     removeCards(state) {
-      state.classs = []
-      state.spells = []
-      state.monsters = []
+      state.classs = [];
+      state.spells = [];
+      state.monsters = [];
       localStorage.removeItem("classes");
       localStorage.removeItem("spells");
       localStorage.removeItem("monsters");

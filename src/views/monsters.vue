@@ -1,5 +1,4 @@
 <template>
-  <navbar />
   <search
     :page_name="page_name"
     :url_base="base_url"
@@ -23,13 +22,11 @@
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarNoLogged.vue";
 import search from "@/components/search.vue";
 import monsters from "@/components/monsters.vue";
 
 export default {
   components: {
-    navbar,
     search,
     monsters,
   },
@@ -63,6 +60,7 @@ export default {
   transform: translatey(0px);
   animation: float 2s ease-in-out infinite;
 }
+
 .back-image {
   background-image: linear-gradient(
       to bottom,
@@ -72,6 +70,7 @@ export default {
     url("../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
+
 @keyframes float {
   0% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);

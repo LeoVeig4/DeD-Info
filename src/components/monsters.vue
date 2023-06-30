@@ -150,14 +150,19 @@
       </div>
     </div>
   </div>
+  <div v-if="picture.show">
+    <ModalImage :link="picture.img" :text="picture.name" @close="closeModal" />
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import api from "@/services/api.js";
 import apiprivate from "@/services/apiprivate.js";
-
+import ModalImage from "./ModalImage.vue";
 export default {
+  components: {
+    ModalImage,
+  },
   props: {
     monsters: Array,
     isSearch: Boolean,
@@ -166,16 +171,36 @@ export default {
   name: "classes-component",
   data() {
     return {
+      picture: { show: false, img: "", name: "" },
       base_url: "monsters",
     };
   },
-  mounted() {},
+  mounted() {
+    document.addEventListener("click", this.handleClickOutside);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.handleClickOutside);
+  },
   methods: {
+    closeModal() {
+      this.picture.show = false;
+    },
     async SeePicture(index) {
+      this.$gtag.event("picture", {
+        event_category: "engagement",
+        event_label: "method",
+      });
       if (this.monsters[index].image) {
         const url = this.monsters[index].image.slice(4);
-        const { data } = await api.get(url);
-        console.log(data);
+        this.picture.img = "https://www.dnd5eapi.co/api" + url;
+        this.picture.name = this.monsters[index].name;
+        this.picture.show = true;
+      } else {
+        this.$toast.error("This monster doesn't have photo!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     FormatSpecial(index) {
@@ -208,8 +233,18 @@ export default {
           await apiprivate.delete(`/cards/monsters/${monster.index}`);
         }
         this.$store.commit("removeMonster", monster);
+        this.$toast.success("Monster removed", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     async SaveMonster(index) {
@@ -224,8 +259,18 @@ export default {
           await apiprivate.post("/cards", model);
         }
         this.$store.commit("storeMonster", monster);
+        this.$toast.success("Monster saved", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       } catch (error) {
         console.log(error);
+        this.$toast.error("Error!", {
+          position: this.$toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1000,
+          theme: "dark",
+        });
       }
     },
     showNone() {
@@ -246,9 +291,11 @@ export default {
   width: 50%;
   max-width: 400px;
 }
+
 .minimo {
   min-width: 350px;
 }
+
 .back-image {
   background-image: linear-gradient(
       to bottom,

@@ -1,5 +1,4 @@
 <template>
-  <navbar :actualTitle="page_name" />
   <div
     class="bg-white border-4 border-red-700 rounded-xl w-6/12 mt-8 mx-auto container-login"
   >
@@ -8,18 +7,15 @@
       class="h-28 mx-auto mt-3 mb-3 border-4 rounded-full"
       alt="D&D 5 Logo"
     />
-    <p class="text-3xl m-5 text-stone-200 font-bold">Você está logado!!</p>
+    <p class="text-3xl m-5 text-stone-200 font-bold">You are logged in!!</p>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarLogged.vue";
 import apiprivate from "@/services/apiprivate.js";
 export default {
-  components: {
-    navbar,
-  },
+  components: {},
   name: "my-hero-view",
   data() {
     return {
@@ -52,6 +48,7 @@ export default {
 .bt-background {
   background-color: #b91c1c;
 }
+
 .bt-background:hover {
   background-color: #ebd6a7;
 }
@@ -59,9 +56,11 @@ export default {
 .text-color {
   color: #b91c1c;
 }
+
 .text-color:hover {
   color: #ebd6a7;
 }
+
 .container-login {
   max-width: 450px;
   min-width: 300px;
@@ -73,6 +72,7 @@ export default {
     url("../../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
+
 @keyframes float {
   0% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);

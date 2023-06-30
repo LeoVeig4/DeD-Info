@@ -1,5 +1,4 @@
 <template>
-  <navbar :actualTitle="page_name" />
   <div
     v-if="!ComponentSignUp && !ComponentForgot"
     class="bg-white border-4 border-red-700 rounded-xl w-6/12 mt-8 mx-auto container-login"
@@ -184,12 +183,9 @@
 
 <script>
 // @ is an alias to /src
-import navbar from "@/components/navbarNoLogged.vue";
 import apiprivate from "@/services/apiprivate.js";
 export default {
-  components: {
-    navbar,
-  },
+  components: {},
   name: "my-hero-view",
   data() {
     return {
@@ -211,6 +207,7 @@ export default {
       hasError: "",
       ComponentSignUp: false,
       ComponentForgot: false,
+      toastId: "",
     };
   },
   methods: {
@@ -232,11 +229,26 @@ export default {
       return false;
     },
     async HandleForgot() {
+      this.toastId = this.$toast.loading("Sending Email!", {
+        toastId: "customId",
+        theme: "dark",
+        autoClose: false,
+        position: this.$toast.POSITION.BOTTOM_CENTER,
+      });
       try {
         const { data } = await apiprivate.post("/forgot", this.modelForgot);
         this.$store.commit("storeToken", data.token);
         this.$store.commit("storeRole", "simple-user");
         this.$router.push("/logged/myhero");
+        this.$toast.update(this.toastId, {
+          render: "Email Sent!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          theme: "dark",
+          type: "success",
+          isLoading: false,
+        });
       } catch (error) {
         console.log(error);
         this.hasError = "something went wrong!";
@@ -244,9 +256,24 @@ export default {
           if (error.e.data)
             if (error.e.data.message)
               this.hasError = error.response.data.message;
+        this.$toast.update(this.toastId, {
+          render: "Error!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          type: "error",
+          theme: "dark",
+          isLoading: false,
+        });
       }
     },
     async HandleSignup() {
+      this.toastId = this.$toast.loading("Creating Warrior", {
+        toastId: "customId",
+        theme: "dark",
+        autoClose: false,
+        position: this.$toast.POSITION.BOTTOM_CENTER,
+      });
       if (this.modelSignUp.password !== this.modelSignUp.passwordConfirm) {
         this.hasError = `passwords don't match!`;
         return;
@@ -262,6 +289,15 @@ export default {
       };
       try {
         await apiprivate.post("/users", model);
+        this.$toast.update(this.toastId, {
+          render: "User Created!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          theme: "dark",
+          type: "success",
+          isLoading: false,
+        });
         this.goBack();
       } catch (error) {
         console.log(error);
@@ -270,14 +306,43 @@ export default {
           if (error.e.data)
             if (error.e.data.message)
               this.hasError = error.response.data.message;
+        this.$toast.update(this.toastId, {
+          render: "Error!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          type: "error",
+          theme: "dark",
+          isLoading: false,
+        });
       }
     },
     async HandleSignIn() {
+      this.toastId = this.$toast.loading("Logging In", {
+        toastId: "customId",
+        theme: "dark",
+        autoClose: false,
+        position: this.$toast.POSITION.BOTTOM_CENTER,
+      });
+      this.$gtag.event("login", {
+        event_category: "interaction",
+        event_label: "login",
+        value: "login",
+      });
       try {
         const { data } = await apiprivate.post("/auth", this.modelLogin);
         this.$store.commit("storeToken", data.token);
         this.$store.commit("storeRole", "simple-user");
         this.$router.push("/logged/myhero");
+        this.$toast.update(this.toastId, {
+          render: "Logged In!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          theme: "dark",
+          type: "success",
+          isLoading: false,
+        });
       } catch (error) {
         console.log(error);
         this.hasError = "something went wrong!";
@@ -285,6 +350,15 @@ export default {
           if (error.e.data)
             if (error.e.data.message)
               this.hasError = error.response.data.message;
+        this.$toast.update(this.toastId, {
+          render: "Error!",
+          autoClose: 2000,
+          closeOnClick: true,
+          closeButton: true,
+          type: "error",
+          theme: "dark",
+          isLoading: false,
+        });
       }
     },
   },
@@ -308,6 +382,7 @@ export default {
 .bt-background {
   background-color: #b91c1c;
 }
+
 .bt-background:hover {
   background-color: #ebd6a7;
 }
@@ -315,9 +390,11 @@ export default {
 .text-color {
   color: #b91c1c;
 }
+
 .text-color:hover {
   color: #ebd6a7;
 }
+
 .container-login {
   max-width: 450px;
   min-width: 300px;
@@ -329,6 +406,7 @@ export default {
     url("../../public/fundo_madeira.jpg");
   background-size: 150px;
 }
+
 @keyframes float {
   0% {
     box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);

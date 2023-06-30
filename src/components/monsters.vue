@@ -1,20 +1,35 @@
 <template>
-  <div v-if="haveFound && isSearch" class="bg-white border-4 border-red-700 rounded-xl w-4/12 mt-5 mx-auto">
+  <div
+    v-if="haveFound && isSearch"
+    class="bg-white border-4 border-red-700 rounded-xl w-4/12 mt-5 mx-auto"
+  >
     <p>The search have no response</p>
   </div>
-  <div v-for="(item, index) in monsters" :key="item.index" :index="index"
-    class="minimo relative w-8/12 mx-auto mt-12 rounded-lg shadow-sm shadow-slate-500 border-4 border-black text-left back-image">
+  <div
+    v-for="(item, index) in monsters"
+    :key="item.index"
+    :index="index"
+    class="minimo relative w-8/12 mx-auto mt-12 rounded-lg shadow-sm shadow-slate-500 border-4 border-black text-left back-image"
+  >
     <div class="absolute mt-2 mr-4 top-0 right-0">
-      <button @click="SeePicture(index)"
-        class="text-yellow-900 bg-stone-100 rounded-lg font-bold hover:bg-yellow-900 hover:text-stone-200 p-1 mr-2">
+      <button
+        @click="SeePicture(index)"
+        class="text-yellow-900 bg-stone-100 rounded-lg font-bold hover:bg-yellow-900 hover:text-stone-200 p-1 mr-2"
+      >
         Picture
       </button>
-      <button @click="SaveMonster(index)" v-if="isSearch"
-        class="text-yellow-900 bg-stone-100 rounded-lg font-bold hover:bg-yellow-900 hover:text-stone-200 p-1">
+      <button
+        @click="SaveMonster(index)"
+        v-if="isSearch"
+        class="text-yellow-900 bg-stone-100 rounded-lg font-bold hover:bg-yellow-900 hover:text-stone-200 p-1"
+      >
         Save
       </button>
-      <button @click="RemoveMonters(index)" v-else
-        class="text-red-600 bg-stone-100 rounded-lg font-bold hover:bg-red-600 hover:text-stone-200 p-1">
+      <button
+        @click="RemoveMonters(index)"
+        v-else
+        class="text-red-600 bg-stone-100 rounded-lg font-bold hover:bg-red-600 hover:text-stone-200 p-1"
+      >
         Remove
       </button>
     </div>
@@ -23,22 +38,36 @@
       {{ item.name }}
     </p>
     <p class="mt-3 ml-4 mr-5 text-white flex justify-between flex-wrap">
-      <span><span class="font-bold">| STR: </span>
-        <span class="text-stone-200">{{ item.strength }} |</span></span>
-      <span><span class="font-bold">| DEX: </span>
-        <span class="text-stone-200">{{ item.dexterity }} |</span></span>
-      <span><span class="font-bold">| CONST: </span>
-        <span class="text-stone-200">{{ item.constitution }} |</span></span>
-      <span><span class="font-bold">| INT: </span>
-        <span class="text-stone-200">{{ item.intelligence }} |</span></span>
-      <span><span class="font-bold">| WIS: </span>
-        <span class="text-stone-200">{{ item.wisdom }} |</span></span>
-      <span><span class="font-bold">| CHA: </span>
-        <span class="text-stone-200">{{ item.charisma }} |</span></span>
+      <span
+        ><span class="font-bold">| STR: </span>
+        <span class="text-stone-200">{{ item.strength }} |</span></span
+      >
+      <span
+        ><span class="font-bold">| DEX: </span>
+        <span class="text-stone-200">{{ item.dexterity }} |</span></span
+      >
+      <span
+        ><span class="font-bold">| CONST: </span>
+        <span class="text-stone-200">{{ item.constitution }} |</span></span
+      >
+      <span
+        ><span class="font-bold">| INT: </span>
+        <span class="text-stone-200">{{ item.intelligence }} |</span></span
+      >
+      <span
+        ><span class="font-bold">| WIS: </span>
+        <span class="text-stone-200">{{ item.wisdom }} |</span></span
+      >
+      <span
+        ><span class="font-bold">| CHA: </span>
+        <span class="text-stone-200">{{ item.charisma }} |</span></span
+      >
     </p>
     <p class="mt-3 ml-4 text-white">
       <span class="font-bold">Hit Points: </span>
-      <span class="text-stone-200">{{ item.hit_points }} ({{ item.hit_points_roll }})</span>
+      <span class="text-stone-200"
+        >{{ item.hit_points }} ({{ item.hit_points_roll }})</span
+      >
     </p>
     <p class="mt-3 ml-4 text-white">
       <span class="font-bold">Speed: </span>
@@ -76,8 +105,11 @@
 
     <p class="mt-3 ml-4 text-white font-bold">Special Abilities:</p>
     <div class="flex flex-wrap justify-between">
-      <div class="specialDiv m-2 border-2 rounded-lg bg-stone-700 w-4/12" v-for="abilities in item.special_abilities"
-        :key="abilities.name">
+      <div
+        class="specialDiv m-2 border-2 rounded-lg bg-stone-700 w-4/12"
+        v-for="abilities in item.special_abilities"
+        :key="abilities.name"
+      >
         <div class="text-center text-amber-200 font-bold">
           {{ abilities.name }}
         </div>
@@ -88,8 +120,11 @@
     </div>
     <p class="mt-3 mx-4 text-white font-bold">Actions:</p>
     <div class="flex flex-wrap justify-between">
-      <div class="specialDiv m-2 border-2 rounded-lg bg-stone-700 w-4/12" v-for="actions in item.actions"
-        :key="actions.name">
+      <div
+        class="specialDiv m-2 border-2 rounded-lg bg-stone-700 w-4/12"
+        v-for="actions in item.actions"
+        :key="actions.name"
+      >
         <div class="text-center text-amber-200 font-bold">
           {{ actions.name }}
         </div>
@@ -101,8 +136,11 @@
 
     <p class="mt-3 ml-4 text-white font-bold">Legendary Actions:</p>
     <div class="flex flex-wrap justify-between">
-      <div class="specialDiv m-2 border-2 rounded-lg bg-stone-700 w-4/12" v-for="legendary in item.legendary_actions"
-        :key="legendary.name">
+      <div
+        class="specialDiv m-2 border-2 rounded-lg bg-stone-700 w-4/12"
+        v-for="legendary in item.legendary_actions"
+        :key="legendary.name"
+      >
         <div class="text-center text-amber-200 font-bold">
           {{ legendary.name }}
         </div>
@@ -148,7 +186,10 @@ export default {
       this.picture.show = false;
     },
     async SeePicture(index) {
-      this.$gtag.event("picture", { 'event_category': 'engagement', 'event_label': 'method' });
+      this.$gtag.event("picture", {
+        event_category: "engagement",
+        event_label: "method",
+      });
       if (this.monsters[index].image) {
         const url = this.monsters[index].image.slice(4);
         this.picture.img = "https://www.dnd5eapi.co/api" + url;
@@ -256,9 +297,11 @@ export default {
 }
 
 .back-image {
-  background-image: linear-gradient(to bottom,
+  background-image: linear-gradient(
+      to bottom,
       rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)),
+      rgba(0, 0, 0, 0.5)
+    ),
     url("../../public/fundo_madeira.jpg");
   background-size: 150px;
 }

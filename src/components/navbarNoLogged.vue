@@ -32,13 +32,16 @@
       </div>
     </div>
   </nav>
-  <router-view v-slot="{ Component, route }">
-    <Transition mode="out-in" :name="slide">
-      <div :key="route.name" class="teste">
-        <component :is="Component" />
-      </div>
-    </Transition>
-  </router-view>
+  <div class="div-tam overflow-hidden">
+
+    <router-view v-slot="{ Component, route }">
+      <Transition mode="out-in" :name="slide">
+        <div :key="route.name" class="teste">
+          <component :is="Component" />
+        </div>
+      </Transition>
+    </router-view>
+  </div>
 </template>
 
 <script>
@@ -92,7 +95,10 @@ export default {
       this.dropNav = !this.dropNav;
     },
     goto(page) {
-      this.$gtag.event(`goTo_${page.route}`, { 'event_category': 'engagement', 'event_label': 'method' });
+      this.$gtag.event(`goTo_${page.route}`, {
+        event_category: "engagement",
+        event_label: "method",
+      });
       if (page.number > this.pageActive.number) this.slide = "right";
       else this.slide = "left";
       this.pageActive = page;
@@ -113,28 +119,23 @@ export default {
   }
 }
 
-.right-enter-active,
+.right-enter-active {
+  animation: 0.6s slide-left-in;
+}
+
 .right-leave-active {
-  animation: 1s slide-left-in;
-  transition: animation 1s;
+  animation: 0.6s slide-right-out;
 }
 
-.right-enter-from,
-.right-leave-to {
-  animation: 1s slide-right-out;
-  transition: animation 1s;
+
+
+
+.left-enter-active {
+  animation: 0.6s slide-right-in;
 }
 
-.left-enter-active,
 .left-leave-active {
-  animation: 1s slide-right-in;
-  transition: animation 1s;
-}
-
-.left-enter-from,
-.left-leave-to {
-  animation: 1s slide-left-out;
-  transition: animation 1s;
+  animation: 0.6s slide-left-out;
 }
 
 @keyframes slide-right-in {
@@ -146,6 +147,7 @@ export default {
 
   to {
     margin-left: 0%;
+    opacity: 1;
   }
 }
 
@@ -158,6 +160,7 @@ export default {
 
   from {
     margin-left: 0%;
+    opacity: 1;
   }
 }
 
@@ -169,7 +172,8 @@ export default {
   }
 
   to {
-    margin-left: 0%;
+    margin-right: 0%;
+    opacity: 1;
   }
 }
 
@@ -181,8 +185,13 @@ export default {
   }
 
   from {
-    margin-left: 0%;
+    margin-right: 0%;
+    opacity: 1;
   }
+}
+
+.div-tam {
+  width: 99vw;
 }
 
 body {

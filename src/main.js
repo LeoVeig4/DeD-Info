@@ -28,9 +28,13 @@ app.config.globalProperties.$toast = toast;
 app.use(router);
 app.use(store);
 app.use(Vue3Toastify);
-app.use(VueGtag, {
+app.use(
+  VueGtag,
+  {
     config: { id: "xxxxxxxx" },
-}, router);
+  },
+  router
+);
 app.mount("#app");
 
 //import "bootstrap/dist/js/bootstrap.js";
